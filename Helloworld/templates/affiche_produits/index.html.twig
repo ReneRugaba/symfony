@@ -17,13 +17,15 @@
             <th>nom produit</th>
             <th>prix</th>
         </tr>
-       {% for arrayObject in nameProduits %}
-           <td>{{arrayObject.id}}</td>
-           <td>{{arrayObject.designation}}</td>
-           <td>{{arrayObject.prix}}</td>
+        
+         {% for object in produitTable %}
+         <tr>
+           <td>{{object.id}}</td>
+           <td>{{object.designation}}</td>
+           <td>{{object.prix}}</td>
+        </tr>
        {% endfor %}
-
-
+        
     </table>
 
 </div>

@@ -16,9 +16,8 @@ class AfficheProduitsController extends AbstractController
     public function index(ProduitRepository $produit): Response
     {
         $arrayObject = $produit->findAll(Produit::class);
-        var_dump($arrayObject);
         return $this->render('affiche_produits/index.html.twig', [
-            $arrayObject
+            'produitTable' => $arrayObject
         ]);
     }
 

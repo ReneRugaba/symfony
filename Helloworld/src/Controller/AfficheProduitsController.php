@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Produit;
+use App\Form\AjoutProduitType;
 use App\Repository\ProduitRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,12 +25,23 @@ class AfficheProduitsController extends AbstractController
     }
 
     /**
-     * @Route("/produit/formulaire", name="formulaire")
+     * @Route("/produit/formulaire", name="ajouter_formulaire")
      */
-    public function ajout(): Response
+    public function ajout(Request $request): Response
     {
+        $produit = new Produit();
+
+        $form = $this->createForm(AjoutProduitType::class, $produit);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($produit);
+            $manager->flush();
+
+            return $this->redirectToRoute('tableauProduit');
+        }
         return $this->render('affiche_produits/ajout.html.twig', [
-            'variable' => 'CECI EST UN FORMULAIRE',
+            'monForm' => $form->createView()
         ]);
     }
 

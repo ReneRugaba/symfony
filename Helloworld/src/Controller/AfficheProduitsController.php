@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Produit;
 use App\Form\AjoutProduitType;
 use App\Repository\ProduitRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,14 +27,13 @@ class AfficheProduitsController extends AbstractController
     /**
      * @Route("/produit/formulaire", name="ajouter_formulaire")
      */
-    public function ajout(Request $request): Response
+    public function ajout(Request $request, EntityManagerInterface $manager): Response
     {
         $produit = new Produit();
 
         $form = $this->createForm(AjoutProduitType::class, $produit);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $manager = $this->getDoctrine()->getManager();
             $manager->persist($produit);
             $manager->flush();
 

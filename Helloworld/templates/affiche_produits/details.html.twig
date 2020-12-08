@@ -3,16 +3,17 @@
 {% block title %}Details produit{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Detail du produit</h1>
-
-    <h2>{{produit}}</h2> 
-    
-    
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>Details du produit: {{prodDetails.designation}}</h1> 
+            <h3>Prix: {{prodDetails.prix}}</h3> 
+            <h3>couleur: {{prodDetails.color}}</h3> 
+            <h3>Statut du produit: {{prodDetails.isShipped}}</h3> 
+            <h3>Vendeur du produit: {{prodDetails.vendeur}}</h3> 
+        </div>
+    </div>
 </div>
+
+
 {% endblock %}

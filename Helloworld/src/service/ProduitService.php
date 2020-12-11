@@ -2,30 +2,50 @@
 
 namespace App\service;
 
+use App\Entity\Produit;
 use App\Repository\ProduitRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use App\service\ProduitInterfService;
+use Doctrine\DBAL\Exception;
+use App\service\exception\ProduitServiceException;
 
-class ProduitService
+class ProduitService implements ProduitInterfService
 {
 
     private $produitRepository;
+    private $manager;
 
-    public function __construct(ProduitRepository $produitRepository)
+    public function __construct(ProduitRepository $produitRepository, EntityManagerInterface $manager)
     {
         $this->produitRepository = $produitRepository;
+        $this->manager = $manager;
     }
 
-    public function findData()
+    public function findData(): array
     {
-        return $this->produitRepository->findAll(Produit::class);
+        try {
+            return $this->produitRepository->findAll(Produit::class);
+        } catch (Exception $e) {
+            throw new ProduitServiceException($e->getMessage());
+        }
     }
 
-    public function searchById($id)
+    public function trouveProduit(int $id): Produit
     {
-        return $this->produitRepository->findOneById($id);
+        try {
+            return $this->produitRepository->findOneById($id);
+        } catch (Exception $e) {
+            throw new ProduitServiceException($e->getMessage());
+        }
     }
 
-    public function trouveProduit($id)
+    public function PersistProduit(Produit $produit): void
     {
-        return $this->produitRepository->findOneById($id);
+        try {
+            $this->manager->persist($produit);
+            $this->manager->flush();
+        } catch (Exception $e) {
+            throw new ProduitServiceException($e->getMessage());
+        }
     }
 }

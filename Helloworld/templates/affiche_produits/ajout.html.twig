@@ -6,12 +6,12 @@
     <div class="container">
         <div class="row">
             <div class="col-6 mx-auto d-block">
-                <h1 class="text-center">formulaire d'ajout</h1>
+                <h1 class="text-center">formulaire</h1>
+                <a href="{{path('tableauProduit')}}"><button type="button" class="btn btn-info mb-3">Tableau produit</button></a>
                 {{form_start(monForm,{
                                         'method':'POST',
                                         })}}
-                {{form_row(monForm.designation)}}
-                {{form_row(monForm.prix)}}
+                {{form_row(monForm.categorie)}}
                 {{ form_end(monForm)}}
             </div>
         </div>

@@ -3,50 +3,61 @@
 {% block title %}Page Produit{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    
-
+{% if erreur is defined %}
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <table class="table text-center">
-                <thead class="thead-dark">
-                        <tr>
-                            <th>id</th>
-                            <th>nom produit</th>
-                            <th>prix</th>
-                            <th>couleur</th>
-                            <th>status livraison</th>
-                            <th>vendeur</th>
-                            <th>modifier</th>
-                            <th>details produit</th>
-                            <th>supprimer produit</th>
-                        </tr>
-                </thead>
-        
-        {% for object in produitTable %}
-                        <tr>
-                            <td>{{object.id}}</td>
-                            <td>{{object.designation}}</td>
-                            <td>{{object.prix}}</td>
-                            <td>{{object.color}}</td>
-                            <td>{{object.isShipped}}</td>
-                            <td>{{object.vendeur}}</td>
-                            <td><a href="{{path('modif_form',{'id':object.id})}}"><button type="button" class="btn btn-warning">update</button></a></td>
-                            <td><a href="{{path('details_produit',{'id':object.id})}}"><button type="button" class="btn btn-primary">details</button></a></td>
-                            <td><a href="{{path('supprimer_produit',{'id':object.id})}}"><button type="button" class="btn btn-danger">X</button></a></td>
-                        </tr>
-        {% endfor %}
-        
-    </table>
-            </div>
+        <div class="alert alert-danger text-center m-2">
+        <iframe src="https://giphy.com/embed/WQOIEQRgiK722l3PQT"  frameBorder="0" class="giphy-embed mx-auto d-block" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/error-retrowave-404-WQOIEQRgiK722l3PQT"></a></p>
+            {{erreur}}
         </div>
     </div>
+{% endif %}
 
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+        <a href="{{path('ajouter_formulaire')}}"><button type="button" class="btn btn-success m-3">Ajouter produit</button></a>
+            <table class="table text-center">
+            <thead class="thead-dark">
+                    <tr>
+                        <th>id</th>
+                        <th>nom produit</th>
+                        <th>prix</th>
+                        <th>couleur</th>
+                        <th>status livraison</th>
+                        <th>vendeur</th>
+                        <th>categorie</th>
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <th>modifier</th>
+                        {% endif %}
+                        <th>details produit</th>
+                        {% if is_granted('ROLE_ADMIN') %}   
+                        <th>supprimer produit</th>
+                        {% endif %}
+                    </tr>
+            </thead>
+    
+    {% for object in produitTable %}
+                    <tr>
+                        <td>{{object.id}}</td>
+                        <td>{{object.designation}}</td>
+                        <td>{{object.prix}}</td>
+                        <td>{{object.color}}</td>
+                        <td>{{object.isShipped}}</td>
+                        <td>{{object.vendeur}}</td>
+                        <td>{{object.categorie.libelle}}</td>
+                        {% if is_granted('ROLE_ADMIN') %}                          
+                        <td><a href="{{path('modif_form',{'id':object.id})}}"><button type="button" class="btn btn-warning">update</button></a></td>
+                        {% endif %}
+                        <td><a href="{{path('details_produit',{'id':object.id})}}"><button type="button" class="btn btn-primary">details</button></a></td>
+                        {% if is_granted('ROLE_ADMIN') %}                      
+                        <td><a href="{{path('supprimer_produit',{'id':object.id})}}"><button type="button" class="btn btn-danger">X</button></a></td>
+                        {% endif %}
+                    </tr>
+    {% endfor %}
+        
+            </table>
+        </div>
+    </div>
 </div>
+
 {% endblock %}

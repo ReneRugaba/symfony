@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}soucrire!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-6 mx-auto d-block text-center mt-3">
+            <h1>formulaire de souscription</h1>
+                {{form_start(form_sub)}}
+                {{form_widget(form_sub)}}
+                {{form_end(form_sub)}}
+            </div>
+        </div>
+    </div>
+{% endblock %}

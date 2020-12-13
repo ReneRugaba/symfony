@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 mx auto d-block text-center">
+            <h1>Profil de : {{ProfilUser.email}}</h1>
+           {% if ProfilUser.adresse %}
+                <h3>Adresse:</h3>
+            <p>
+            {{ProfilUser.adresse.numeroRue}} {{ProfilUser.adresse.rue}}<br>
+            {{ProfilUser.adresse.codePostal}} {{ProfilUser.adresse.ville}}
+            </p>
+           {% endif %}
+            <a href="{{path('tableauProduit')}}"><button type="button" class="btn btn-info m-3">Tableau produit</button></a>
+        </div>
+    </div>
+</div>
+{% endblock %}

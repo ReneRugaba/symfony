@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\ProduitRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ProduitRepository;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=ProduitRepository::class)
+ * @UniqueEntity("designation", message="cet article existe déjà. vous pouvez changer la quantité si cela est nécessaire!")
  */
 class Produit
 {

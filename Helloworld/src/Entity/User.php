@@ -6,9 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity("email",message="cette email est déjà utilisé!")
  */
 class User implements UserInterface
 {
@@ -22,6 +24,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\Email(message="merci de mettre un email valide")
+     * 
      */
     private $email;
 
@@ -35,6 +38,11 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToOne(targetEntity=UserAdresse::class, cascade={"persist", "remove"})
+     */
+    private $adresse;
 
     public function getId(): ?int
     {
@@ -112,5 +120,17 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getAdresse(): ?UserAdresse
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?UserAdresse $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Repository\UserAdresseRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserAdresseRepository;
 
 /**
  * @ORM\Entity(repositoryClass=UserAdresseRepository::class)

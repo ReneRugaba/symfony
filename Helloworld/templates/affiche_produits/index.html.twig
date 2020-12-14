@@ -19,20 +19,21 @@
             <table class="table text-center">
             <thead class="thead-dark">
                     <tr>
-                        <th>id</th>
-                        <th>nom produit</th>
-                        <th>prix</th>
-                        <th>couleur</th>
-                        <th>status livraison</th>
-                        <th>vendeur</th>
-                        <th>categorie</th>
+                        <th>Id</th>
+                        <th>Nom produit</th>
+                        <th>Prix</th>
+                        <th>Couleur</th>
+                        <th>Status livraison</th>
+                        <th>Vendeur</th>
+                        <th>Categorie</th>
                         {% if is_granted('ROLE_ADMIN') %}
-                        <th>modifier</th>
+                        <th>Modifier</th>
                         {% endif %}
-                        <th>details produit</th>
+                        <th>Details produit</th>
                         {% if is_granted('ROLE_ADMIN') %}   
-                        <th>supprimer produit</th>
+                        <th>Supprimer produit</th>
                         {% endif %}
+                        <th>Ajouter panier</th>
                     </tr>
             </thead>
     
@@ -46,12 +47,13 @@
                         <td>{{object.vendeur}}</td>
                         <td>{{object.categorie.libelle}}</td>
                         {% if is_granted('ROLE_ADMIN') %}                          
-                        <td><a href="{{path('modif_form',{'id':object.id})}}"><button type="button" class="btn btn-warning">update</button></a></td>
+                        <td><a href="{{path('modif_form',{'id':object.id})}}"><button type="button" class="btn btn-warning">Modifier</button></a></td>
                         {% endif %}
-                        <td><a href="{{path('details_produit',{'id':object.id})}}"><button type="button" class="btn btn-primary">details</button></a></td>
+                        <td><a href="{{path('details_produit',{'id':object.id})}}"><button type="button" class="btn btn-primary">Details</button></a></td>
                         {% if is_granted('ROLE_ADMIN') %}                      
                         <td><a href="{{path('supprimer_produit',{'id':object.id})}}"><button type="button" class="btn btn-danger">X</button></a></td>
                         {% endif %}
+                        <td><a href="{{path('panier_produit',{'id':object.id})}}"><button type="button" class="btn btn-secondary">Ajout</button></a></td>
                     </tr>
     {% endfor %}
         

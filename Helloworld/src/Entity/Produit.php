@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProduitRepository;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -59,6 +61,16 @@ class Produit
      * @ORM\JoinColumn(nullable=false)
      */
     private $categorie;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="Panier")
+     */
+    private $PanierProduit;
+
+    public function __construct()
+    {
+        $this->PanierProduit = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -133,6 +145,33 @@ class Produit
     public function setCategorie(?Categories $categorie): self
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getPanierProduit(): Collection
+    {
+        return $this->PanierProduit;
+    }
+
+    public function addPanierProduit(User $panierProduit): self
+    {
+        if (!$this->PanierProduit->contains($panierProduit)) {
+            $this->PanierProduit[] = $panierProduit;
+            $panierProduit->addPanier($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanierProduit(User $panierProduit): self
+    {
+        if ($this->PanierProduit->removeElement($panierProduit)) {
+            $panierProduit->removePanier($this);
+        }
 
         return $this;
     }

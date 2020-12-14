@@ -15,6 +15,13 @@
             </p>
            {% endif %}
             <a href="{{path('tableauProduit')}}"><button type="button" class="btn btn-info m-3">Tableau produit</button></a>
+            <a href="{{path('user_adresse',{'id':ProfilUser.id})}}"><button type="button" class="btn btn-success m-3">
+            {% if ProfilUser.adresse %}
+                Modifier adresse
+            {% else %}
+                Ajouter adresse
+            {% endif %}
+            </button></a>
         </div>
     </div>
 </div>

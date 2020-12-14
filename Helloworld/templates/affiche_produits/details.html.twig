@@ -13,7 +13,7 @@
             <h3>Vendeur du produit: {{prodDetails.vendeur}}</h3> 
             <a href="{{path('tableauProduit')}}"><button type="button" class="btn btn-info m-3">Tableau produit</button></a>
             {% if is_granted('ROLE_ADMIN') %}                 
-            <a href="{{path('modif_form',{'id':prodDetails.id})}}"><button type="button" class="btn btn-warning m-3">maudifier produit</button></a>
+            <a href="{{path('modif_form',{'id':prodDetails.id})}}"><button type="button" class="btn btn-warning m-3">Modifier produit</button></a>
             {% endif %}
         </div>
     </div>

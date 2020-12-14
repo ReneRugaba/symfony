@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -43,6 +45,16 @@ class User implements UserInterface
      * @ORM\OneToOne(targetEntity=UserAdresse::class, cascade={"persist", "remove"})
      */
     private $adresse;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Produit::class, inversedBy="PanierProduit")
+     */
+    private $Panier;
+
+    public function __construct()
+    {
+        $this->Panier = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -130,6 +142,30 @@ class User implements UserInterface
     public function setAdresse(?UserAdresse $adresse): self
     {
         $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Produit[]
+     */
+    public function getPanier(): Collection
+    {
+        return $this->Panier;
+    }
+
+    public function addPanier(Produit $panier): self
+    {
+        if (!$this->Panier->contains($panier)) {
+            $this->Panier[] = $panier;
+        }
+
+        return $this;
+    }
+
+    public function removePanier(Produit $panier): self
+    {
+        $this->Panier->removeElement($panier);
 
         return $this;
     }
